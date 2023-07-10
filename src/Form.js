@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  TextInput,
-} from "react-native";
+import { View, Text, StyleSheet, Button, TextInput } from "react-native";
 import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
 const Form = (props) => {
@@ -13,20 +7,20 @@ const Form = (props) => {
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(0);
 
-  const [showDetails, setShowDetails] = useState(false);
-
   const onPress = async () => {
-    setShowDetails(true);
+    try {
+      const load = await AsyncStorage.getItem("data");
+      const previousData = load ? load : [];
 
-    const load = await AsyncStorage.getItem("data");
-    const previousData = load ? load : [];
+      await AsyncStorage.setItem("data", [
+        ...previousData,
+        { name: name, email: email, age: age },
+      ]);
 
-    await AsyncStorage.setItem("data", [
-      ...previousData,
-      { name: name, email: email, age: age },
-    ]);
-
-    props.navigation.navigate("Details");
+      props.navigation.navigate("Details");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -53,13 +47,6 @@ const Form = (props) => {
         />
         <Button title="Submit" style={styles.button} onPress={onPress} />
       </View>
-      {showDetails && (
-        <View>
-          <Text>Name: {name}</Text>
-          <Text>Email: {email}</Text>
-          <Text>Age: {age}</Text>
-        </View>
-      )}
     </View>
   );
 };
