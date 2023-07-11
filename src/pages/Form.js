@@ -49,12 +49,14 @@ const Form = (props) => {
           style={styles.input}
         />
         <TextInput
+          keyboardType="email-address"
           placeholder="Email"
           value={email}
           onChangeText={(e) => setEmail(e)}
           style={styles.input}
         />
         <TextInput
+          keyboardType="number-pad"
           placeholder="Age"
           value={String(age === 0 ? "" : age)}
           onChangeText={(e) => setAge(e)}
