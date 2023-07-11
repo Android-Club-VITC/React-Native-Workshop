@@ -1,23 +1,38 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
 
 const Form = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(0);
+  const { getItem, setItem } = useAsyncStorage("data_user");
 
   const onPress = async () => {
     try {
-      const load = await AsyncStorage.getItem("data");
+      if (!name || !email || !age) {
+        Alert.alert("Error", "Please fill all the fields");
+        return;
+      }
+
+      const load = JSON.parse(await getItem());
       const previousData = load ? load : [];
 
-      await AsyncStorage.setItem("data", [
-        ...previousData,
-        { name: name, email: email, age: age },
-      ]);
+      await setItem(
+        JSON.stringify([
+          ...previousData,
+          {
+            name,
+            email,
+            age,
+          },
+        ])
+      );
 
-      props.navigation.navigate("Details");
+      console.log(await getItem());
+
+      await props.navigation.navigate("Details");
     } catch (err) {
       console.log(err);
     }
@@ -41,7 +56,7 @@ const Form = (props) => {
         />
         <TextInput
           placeholder="Age"
-          value={age}
+          value={String(age === 0 ? "" : age)}
           onChangeText={(e) => setAge(e)}
           style={styles.input}
         />

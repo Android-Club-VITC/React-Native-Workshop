@@ -5,12 +5,11 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Form from "./src/Form";
-import Home from "./src/Home";
-import Details from "./src/Details";
+import Form from "./src/pages/Form";
+import Home from "./src/pages/Home";
+import Details from "./src/pages/Details";
 
 const App = () => {
-  //const
   const Stack = createStackNavigator();
 
   return (
