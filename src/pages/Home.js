@@ -9,11 +9,11 @@ const Home = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.mainHeader}>Welcome to React Native</Text>
-      <View>
+      <View style={styles.parentView}>
         <Text style={styles.heading}>Add New Info</Text>
         <Button title="Go" style={styles.button} onPress={onPress} />
       </View>
-      <View>
+      <View style={styles.parentView}>
         <Text style={styles.heading}>View Info</Text>
         <Button
           title="Go"
@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  parentView: {
+    width: 300,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -43,6 +47,7 @@ const styles = StyleSheet.create({
   mainHeader: {
     fontSize: 32,
     fontWeight: 500,
+    color: "blue",
   },
 });
 

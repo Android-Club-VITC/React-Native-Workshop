@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Details = () => {
   const { getItem, removeItem } = useAsyncStorage("data_user");
@@ -32,16 +33,25 @@ const Details = () => {
           getData();
         }}
       >
-        <Text>Remove All</Text>
+        <Text style={styles.removeText}>
+          <Ionicons name="trash" size={20} color="white" />
+          Remove All
+        </Text>
       </TouchableOpacity>
       <Text style={styles.heading}>Saved Details</Text>
       <FlatList
         data={data}
         renderItem={({ item }) => (
           <View style={styles.detailCard}>
-            <Text style={styles.detailText}>Name: {item.name}</Text>
-            <Text style={styles.detailText}>Email: {item.email}</Text>
-            <Text style={styles.detailText}>Age: {item.age}</Text>
+            <Text style={styles.detailText}>
+              Name: <Text style={styles.details}>{item.name}</Text>
+            </Text>
+            <Text style={styles.detailText}>
+              Email: <Text style={styles.details}>{item.email}</Text>
+            </Text>
+            <Text style={styles.detailText}>
+              Age: <Text style={styles.details}>{item.age}</Text>
+            </Text>
           </View>
         )}
       />
@@ -51,7 +61,8 @@ const Details = () => {
 
 const styles = StyleSheet.create({
   body: {
-    padding: 50,
+    padding: 20,
+    paddingTop: 50,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -74,11 +85,16 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 18,
   },
+  details: {
+    fontWeight: 600,
+  },
+  removeText: {
+    color: "white",
+  },
   removeButton: {
     padding: 10,
     backgroundColor: "red",
     borderRadius: 5,
-
     position: "absolute",
     top: 10,
     right: 10,
